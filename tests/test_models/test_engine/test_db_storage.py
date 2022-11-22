@@ -4,7 +4,8 @@ import unittest
 from models.base_model import BaseModel
 from models import storage
 import os
-
+from models.engine import file_storage
+from models.engine import db_storage
 
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
