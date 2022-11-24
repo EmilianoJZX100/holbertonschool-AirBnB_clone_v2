@@ -4,7 +4,7 @@ import cmd
 import sys
 from shlex import split
 from models.base_model import BaseModel
-from models import storage
+from models.__init__ import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -138,8 +138,9 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj = eval(my_list[0])(kwargs)
                 storage.new(obj)
-            print(obj.id)
             obj.save()
+            print(obj.id)
+            
 
         except SyntaxError:
             print("** class name missing **")
