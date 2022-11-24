@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         try:
-            if not arg:
+            if not args:
                 raise SyntaxError()
             my_list = args.split(" ")
 
