@@ -120,26 +120,25 @@ class HBNBCommand(cmd.Cmd):
             my_list = args.split(" ")
 
             kwargs = {}
-            if len(my_list) > 1:
-                for i in range(1, len(my_list)):
-                    if len(my_list[i].split("=")) == 2:
-                        key = my_list[i].split("=")[0]
-                        value = my_list[i].split("=")[1].replace("_", " ")
-                        value = value.strip('"')
-                        if value.isnumeric():
-                            value = int(value)
+            for i in range(1, len(my_list)):
+                key, value = tuple(my_list[i].split("="))
+                if value[0] == '"':
+                    value = value.strip('"').replace("_", " ")
                 else:
                     try:
-                        float(value)
-                    except Exception:
-                        pass
+                        value = eval(value)
+                    except (SyntaxError, NameError):
+                        continue
                 kwargs[key] = value
 
-            obj = eval("{}{}".format(my_list[0]))
-            for key, val in kwargs.items():
-                setattr(obj, key, val)
+            if kwargs == {}:
+                obj = eval(my_list[0])()
+            else:
+                obj = eval(my_list[0])(kwargs)
+                storage.new(obj)
+            print(obj.id)
             obj.save()
-            print("{}".format(obj.id))
+
         except SyntaxError:
             print("** class name missing **")
         except NameError:
