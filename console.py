@@ -10,8 +10,6 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from models.engine import file_storage
-
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -114,12 +112,12 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, arg):
+    def do_create(self, args):
         """ Create an object of any class"""
         try:
             if not arg:
                 raise SyntaxError()
-            my_list = line.split(" ")
+            my_list = args.split(" ")
 
             kwargs = {}
             for i in range(1, len(my_list)):
